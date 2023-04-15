@@ -14,22 +14,24 @@ namespace ImageEdit
 
         public bool Resize(bool dir, int size)
         {
-            return false;
+            Images[0] = new Bitmap(size, size);
+            return true;
         }
 
         public bool Resize(int w, int h)
         {
-            return false;
+            Images[0] = new Bitmap(w, h);
+            return true;
         }
 
         public bool Load(string filePath)
         {
-            return false;
+            return true;
         }
 
         public bool Save(string filePath, string format)
         {
-            return false;
+            return true;
         }
     }
 }

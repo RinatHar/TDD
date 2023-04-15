@@ -49,8 +49,8 @@ namespace Tests
             {
                 Assert.Multiple(() =>
                 {
-                    Assert.That(image.Width, Is.EqualTo(res_w));
-                    Assert.That(image.Height, Is.EqualTo(res_h));
+                    Assert.That(res_w, Is.EqualTo(image.Width));
+                    Assert.That(res_h, Is.EqualTo(image.Height));
                 });
             }
         }
