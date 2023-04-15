@@ -26,15 +26,17 @@ namespace Tests
             }
         }
 
-        [TestCase("1.jpg", 1)] // загрузка одной картинки
-        [TestCase("test_images", 3)] // загрузка директории с картинками
-        public void TestLoad(string filePath, int count_images)
+        [TestCase("test_images/1.jpg", 1, true)] // загрузка одной картинки
+        [TestCase("test_images", 3, true)] // загрузка директории с картинками
+        [TestCase("test_images123", 0, false)] // загрузка несуществующей директории
+        [TestCase("5.jpg", 0, false)] // загрузка несуществующего файла
+        public void TestLoad(string filePath, int count_images, bool res)
         {
             bool result = editor.Load(filePath);
 
             Assert.Multiple(() =>
             {
-                Assert.That(result, Is.True);
+                Assert.That(res, Is.EqualTo(result));
                 Assert.That(count_images, Is.EqualTo(editor.Images.Count));
             });
         }

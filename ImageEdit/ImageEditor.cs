@@ -16,26 +16,51 @@ namespace ImageEdit
 
         public bool Resize(bool dir, int size)
         {
-            Images[0] = new Bitmap(size, size);
+            if (dir) // по ширине
+            {
+                for (int i = 0; i < Images.Count; i++)
+                {
+                    Images[i] = new Bitmap(Images[i], size, (int)(Images[i].Height * ((float)size / Images[i].Width)));
+                }
+            }
+            else // по высоте
+            {
+                for (int i = 0; i < Images.Count; i++)
+                {
+                    Images[i] = new Bitmap(Images[i], (int)(Images[i].Width * ((float)size / Images[i].Height)), size);
+                }
+            }
+            
+
             return true;
         }
 
         public bool Resize(int w, int h)
         {
-            Images[0] = new Bitmap(w, h);
+            for (int i = 0; i < Images.Count; i++)
+            {
+                Images[i] = new Bitmap(Images[i], w, h);
+            }
             return true;
         }
 
         public bool Load(string filePath)
         {
-            if (filePath == "1.jpg")
-                Images.Add(new Bitmap(100, 100));
-            else if (filePath == "test_images")
+            if (Directory.Exists(filePath))
             {
-                Bitmap[] array = { new Bitmap(1000, 1000), new Bitmap(200, 300), new Bitmap(650, 150) };
-                Images.AddRange(array);
+                string[] files = Directory.GetFiles(filePath);
+                foreach (string file in files)
+                {
+                    Images.Add(new Bitmap(file));
+                }
+                return true;
             }
-            return true;
+            else if (File.Exists(filePath))
+            {
+                Images.Add(new Bitmap(filePath));
+                return true;
+            }
+            return false;
         }
 
         public bool Save(string filePathSave, string format)
