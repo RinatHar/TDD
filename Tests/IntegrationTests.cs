@@ -12,7 +12,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            editor = ImageEdit.ImageEditor();
+            editor = new ImageEdit.ImageEditor();
             folderPath = Path.Combine(Environment.CurrentDirectory, filePathSave);
 
             if (Directory.Exists(folderPath))
@@ -25,11 +25,13 @@ namespace Tests
         [TestCase("test_images", 3)] // загрузка директории с картинками
         public void TestLoad(string filePath, int count_images)
         {
-
             bool result = editor.Load(filePath);
 
-            Assert.That(result, Is.True);
-            Assert.That(editor.Images.Count, count_images);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(count_images, Is.EqualTo(editor.Images.Count));
+            });
         }
 
         [TestCase("*.png")]
@@ -41,13 +43,17 @@ namespace Tests
         [TestCase("*.tiff")]
         public void TestSave(string format)
         {
-            editor.Images.Add(new Bitmap(1000, 1000), new Bitmap(200, 300), new Bitmap(650, 150));
+            Bitmap[] array = { new Bitmap(1000, 1000), new Bitmap(200, 300), new Bitmap(650, 150) };
+            editor.Images.AddRange(array);
 
             bool result = editor.Save(filePathSave, format);
             string[] files = Directory.GetFiles(folderPath, format); // получаем все файлы из каталога с результатами нужного формата
-
-            Assert.That(result, Is.True);
-            Assert.That(files, Has.Length.EqualTo(3));
+            
+            Assert.Multiple(() =>
+            {
+                Assert.That(result, Is.True);
+                Assert.That(files, Has.Length.EqualTo(3));
+            });
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            editor = ImageEdit.ImageEditor();
+            editor = new ImageEdit.ImageEditor();
         }
 
         [TestCase(true, 100, 100, 100)] // изменение по ширине
@@ -23,12 +23,16 @@ namespace Tests
         {
             editor.Images.Add(new Bitmap(1000, 1000));
 
-            editor.Resize(dir, size);
+            bool result = editor.Resize(dir, size);
 
+            Assert.That(result, Is.True);
             foreach (Bitmap image in editor.Images)
             {
-                Assert.That(image.Width, Is.EqualTo(res_w));
-                Assert.That(image.Height, Is.EqualTo(res_h));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(image.Width, Is.EqualTo(res_w));
+                    Assert.That(image.Height, Is.EqualTo(res_h));
+                });
             }
         }
 
@@ -38,12 +42,16 @@ namespace Tests
         {
             editor.Images.Add(new Bitmap(1000, 1000));
 
-            editor.Resize(w, h);
+            bool result = editor.Resize(w, h);
 
+            Assert.That(result, Is.True);
             foreach (Bitmap image in editor.Images)
             {
-                Assert.That(image.Width, Is.EqualTo(res_w));
-                Assert.That(image.Height, Is.EqualTo(res_h));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(image.Width, Is.EqualTo(res_w));
+                    Assert.That(image.Height, Is.EqualTo(res_h));
+                });
             }
         }
     }

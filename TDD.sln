@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "TDD\Main.csproj", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{DFAED156-72E6-4A98-AEB7-F05C486861DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageEdit", "ImageEdit\ImageEdit.csproj", "{C7A7BAF5-1619-403B-9DFD-5D0A7F8C6233}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DFAED156-72E6-4A98-AEB7-F05C486861DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFAED156-72E6-4A98-AEB7-F05C486861DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFAED156-72E6-4A98-AEB7-F05C486861DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7A7BAF5-1619-403B-9DFD-5D0A7F8C6233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7A7BAF5-1619-403B-9DFD-5D0A7F8C6233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7A7BAF5-1619-403B-9DFD-5D0A7F8C6233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7A7BAF5-1619-403B-9DFD-5D0A7F8C6233}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
