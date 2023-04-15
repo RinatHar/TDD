@@ -6,15 +6,20 @@ namespace Tests
     public class IntegrationTests
     {
         private ImageEdit.ImageEditor editor;
-        private readonly string filePathSave = "results";
-        private string folderPath;
+        static private readonly string filePathSave = "results";
+        private readonly string folderPath = Path.Combine(Environment.CurrentDirectory, filePathSave);
 
         [SetUp]
         public void Setup()
         {
             editor = new ImageEdit.ImageEditor();
-            folderPath = Path.Combine(Environment.CurrentDirectory, filePathSave);
 
+            
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
             if (Directory.Exists(folderPath))
             {
                 Directory.Delete(folderPath, true);
@@ -55,5 +60,6 @@ namespace Tests
                 Assert.That(files, Has.Length.EqualTo(3));
             });
         }
+
     }
 }
