@@ -17,15 +17,17 @@ namespace Tests
             editor = new ImageEdit.ImageEditor();
         }
 
-        [TestCase(true, 100, 100, 100)] // изменение по ширине
-        [TestCase(false, 100, 100, 100)] // изменение по высоте
-        public void TestResizeImageWithSaveProp(bool dir, int size, int res_w, int res_h)
+        [TestCase(true, 100, 100, 50, true)] // изменение по ширине
+        [TestCase(false, 100, 200, 100, true)] // изменение по высоте
+        [TestCase(false, -5, 1000, 500, false)] // неверно задана ширина
+        [TestCase(true, 0, 1000, 500, false)] // неверно задана высота
+        public void TestResizeImageWithSaveProp(bool dir, int size, int res_w, int res_h, bool res)
         {
-            editor.Images.Add(new Bitmap(1000, 1000));
+            editor.Images.Add(new Bitmap(1000, 500));
 
             bool result = editor.Resize(dir, size);
 
-            Assert.That(result, Is.True);
+            Assert.That(result, Is.EqualTo(res));
             foreach (Bitmap image in editor.Images)
             {
                 Assert.Multiple(() =>
@@ -36,15 +38,17 @@ namespace Tests
             }
         }
 
-        [TestCase(100, 100, 100, 100)] // пропорции сохраняются
-        [TestCase(50, 100, 50, 100)] // пропорции НЕ сохраняются
-        public void TestResizeImageWithoutSaveProp(int w, int h, int res_w, int res_h)
+        [TestCase(100, 100, 100, 100, true)] // пропорции сохраняются
+        [TestCase(50, 100, 50, 100, true)] // пропорции НЕ сохраняются
+        [TestCase(-100, 100, 1000, 1000, false)] // неверно задана ширина
+        [TestCase(100, 0, 1000, 1000, false)] // неверно задана высота
+        public void TestResizeImageWithoutSaveProp(int w, int h, int res_w, int res_h, bool res)
         {
             editor.Images.Add(new Bitmap(1000, 1000));
 
             bool result = editor.Resize(w, h);
 
-            Assert.That(result, Is.True);
+            Assert.That(result, Is.EqualTo(res));
             foreach (Bitmap image in editor.Images)
             {
                 Assert.Multiple(() =>

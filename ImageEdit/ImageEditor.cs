@@ -16,11 +16,20 @@ namespace ImageEdit
 
         public bool Resize(bool dir, int size)
         {
+            if (size <= 0)
+            {
+                Console.WriteLine("[ОШИБКА] Неверно указан размер (введите размер больше 0)!");
+                return false;
+            }
+
             if (dir) // по ширине
             {
                 for (int i = 0; i < Images.Count; i++)
                 {
                     Images[i] = new Bitmap(Images[i], size, (int)(Images[i].Height * ((float)size / Images[i].Width)));
+                    Graphics g = Graphics.FromImage(Images[i]);
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.Dispose();
                 }
             }
             else // по высоте
@@ -28,18 +37,34 @@ namespace ImageEdit
                 for (int i = 0; i < Images.Count; i++)
                 {
                     Images[i] = new Bitmap(Images[i], (int)(Images[i].Width * ((float)size / Images[i].Height)), size);
+                    Graphics g = Graphics.FromImage(Images[i]);
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.Dispose();
                 }
             }
-            
-
             return true;
         }
 
         public bool Resize(int w, int h)
         {
+            if (w <= 0)
+            {
+                Console.WriteLine("[ОШИБКА] Неверно указана ширина (введите значение больше 0)!");
+                return false;
+            }
+
+            if (h <= 0)
+            {
+                Console.WriteLine("[ОШИБКА] Неверно указана высота (введите значение больше 0)!");
+                return false;
+            }
+
             for (int i = 0; i < Images.Count; i++)
             {
                 Images[i] = new Bitmap(Images[i], w, h);
+                Graphics g = Graphics.FromImage(Images[i]);
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.Dispose();
             }
             return true;
         }
@@ -60,13 +85,15 @@ namespace ImageEdit
                 Images.Add(new Bitmap(filePath));
                 return true;
             }
+            Console.WriteLine("[ОШИБКА] Укажите путь до файла или директории с изображениями!");
             return false;
         }
 
         public bool Save(string filePathSave, string format)
         {
             int num = 1;
-            Directory.CreateDirectory(filePathSave);
+            if (!Directory.Exists(filePathSave))
+                Directory.CreateDirectory(filePathSave);
             switch (format)
             {
                 case "*.png":
@@ -118,6 +145,9 @@ namespace ImageEdit
                         num++;
                     }
                     break;
+                default:
+                    Console.WriteLine("[ОШИБКА] Не удалось найти формат (пример формата: *.png)!");
+                    return false;
             }
 
             return true;

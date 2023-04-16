@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageEdit\ImageEdit.csproj">
+      <Project>{c7a7baf5-1619-403b-9dfd-5d0a7f8c6233}</Project>
+      <Name>ImageEdit</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
